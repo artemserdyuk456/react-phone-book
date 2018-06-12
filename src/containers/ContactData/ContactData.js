@@ -4,11 +4,24 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import InputImg from '../../components/UI/InputImg/InputImg';
 import axios from 'axios';
+import ImageUploader from 'react-images-upload';
 import classes from './ContactData.css';
 
 
 
 class ContactData extends Component {
+    constructor(props) {
+        super(props);
+        this.imgState = { pictures: []};
+        this.onDrop = this.onDrop.bind(this);
+    }
+
+    onDrop(picture) {
+        this.setState({
+            pictures: this.imgState.pictures.concat(picture),
+        })
+    }
+
     state = {
         orderForm: {
             name: {
@@ -172,14 +185,20 @@ class ContactData extends Component {
                         touched={formElement.config.touched}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Button btnType="Success">SAVE</Button>
+                <Button btnType="Success">Add Contact</Button>
             </form>
         );
 
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your Phone Contact Data</h4>
-                <InputImg/>
+                {/*<InputImg/>*/}
+                <ImageUploader
+                    withIcon={false}
+                    buttonText='Add image'
+                    onChange={this.onDrop}
+                    withPreview={true}/>
+                    {/*imgExtension={['.jpg', '.git', '.png']}*/}
                 {form}
             </div>
         );

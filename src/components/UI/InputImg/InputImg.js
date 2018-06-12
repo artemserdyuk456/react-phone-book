@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class InputImg extends Component {
+    state = {
+        selectedImg: null
+    };
+
     imgSelectedHandler = event => {
-        console.log(event.target.files[0]);
+        this.setState({
+            selectedImg: event.target.files[0]
+        })
+    };
+
+    imgUpLoadHandler = () => {
+        axios.post('https://react-phone-book-app.firebaseio.com/contacts.json', this.state)
+
     };
 
     render () {
