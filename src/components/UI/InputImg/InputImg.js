@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class InputImg extends Component {
     imgSelectedHandler = event => {
-        console.log(event.target.file[0]);
+        console.log(event.target.files[0]);
     };
 
     render () {
