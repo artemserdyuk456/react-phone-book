@@ -10,17 +10,43 @@ import classes from './ContactData.css';
 
 
 class ContactData extends Component {
+
+    //add img fnc
     constructor(props) {
         super(props);
-        this.imgState = { pictures: []};
-        this.onDrop = this.onDrop.bind(this);
+        this.imgState = {
+            picture: '',
+            imagePreviewUrl: ''
+        };
+        // this._handleImgChange = this._handleImgChange.bind(this);
+        // this._handleSubmit = this._handleSubmit.bind(this)
     }
 
-    onDrop(picture) {
-        this.setState({
-            pictures: this.imgState.pictures.concat(picture),
-        })
-    }
+    _handleSubmit (e) {
+        e.preventDefault();
+    };
+
+    _handleImgChange (e) {
+        e.preventDefault();
+
+        let reader = new FileReader();
+        let picture = e.target.files[0];
+
+        reader.onloadend = () => {
+            this.setState({
+                picture: picture,
+                imagePreviewUrl: reader.result
+            })
+        };
+
+        reader.readAsDataURL(picture)
+
+    };
+
+
+
+
+
 
     state = {
         orderForm: {
@@ -104,6 +130,7 @@ class ContactData extends Component {
                 valid: true
             }
         },
+        formIsValid: false,
         loading: false
     };
 
@@ -159,12 +186,27 @@ class ContactData extends Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation); //validation
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-        console.log(updatedFormElement); //validation work
-        this.setState({orderForm: updatedOrderForm});
+        // console.log(updatedFormElement); //validation work
+
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+        }
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     };
 
 
     render () {
+        let {imagePreviewUrl} = this.imgState;
+        let $imagePreview = null;
+
+        if (imagePreviewUrl) {
+            $imagePreview = (<img src={imagePreviewUrl}/> )
+        } else {
+            $imagePreview =(<div className={classes.PreviewText}>
+                add img</div>);
+        }
+
         const formElementsArray = [];
         for (let key in this.state.orderForm) {
             formElementsArray.push({
@@ -185,20 +227,22 @@ class ContactData extends Component {
                         touched={formElement.config.touched}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Button btnType="Success">Add Contact</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>Add Contact</Button>
             </form>
         );
 
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your Phone Contact Data</h4>
-                {/*<InputImg/>*/}
-                <ImageUploader
-                    withIcon={false}
-                    buttonText='Add image'
-                    onChange={this.onDrop}
-                    withPreview={true}/>
-                    {/*imgExtension={['.jpg', '.git', '.png']}*/}
+
+                <form onSubmit={(e) => this._handleSubmit(e)}>
+                    <input className={classes} type="file" onChange={(e) => this._handleImgChange(e)} />
+                    <button type="submit" onClick={(e) => this._handleSubmit(e)}>Add Image</button>
+                </form>
+                <div className={classes.ImgPreview}>
+                    {$imagePreview}
+                </div>
+
                 {form}
             </div>
         );

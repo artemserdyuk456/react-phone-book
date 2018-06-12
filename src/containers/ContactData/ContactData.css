@@ -8,6 +8,27 @@
     box-sizing: border-box;
 }
 
+.ImgPreview {
+    text-align: center;
+    margin: 5px 15px;
+    height: 150px;
+    width: 150px;
+    border-left: 2px solid gray;
+    border-right: 2px solid gray;
+    border-top: 2px solid gray;
+    border-bottom: 2px solid gray;
+}
+img {
+    width: 150px;
+    height: 150px;
+}
+
+.PreviewText{
+    width: 100%;
+    margin-top: 20px;
+}
+
+
 @media (min-width: 600px) {
     .ContactData {
         width: 500px;

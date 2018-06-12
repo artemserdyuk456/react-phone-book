@@ -9,7 +9,7 @@ const input = ( props ) => {
     const inputClasses = [classes.InputElement];
 
     if (props.invalid && props.touched) {
-        validationError = <p>Please enter valid value</p>
+        validationError = <p className={classes.ValidationError}>Please enter valid value</p>
     }
 
     if (props.invalid && props.shouldValidate && props.touched) {
