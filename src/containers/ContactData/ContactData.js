@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import InputImg from '../../components/UI/InputImg/InputImg';
 import axios from 'axios';
 import classes from './ContactData.css';
 
@@ -171,13 +172,14 @@ class ContactData extends Component {
                         touched={formElement.config.touched}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Button btnType="Success">ORDER</Button>
+                <Button btnType="Success">SAVE</Button>
             </form>
         );
 
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your Phone Contact Data</h4>
+                <InputImg/>
                 {form}
             </div>
         );
