@@ -13,7 +13,7 @@ const input = ( props ) => {
     }
 
     if (props.invalid && props.shouldValidate && props.touched) {
-       inputClasses.push('classes.Invalid');
+       inputClasses.push("classes.Invalid");
     }
     switch ( props.elementType ) {
         case ( 'input' ):
@@ -62,5 +62,4 @@ const input = ( props ) => {
 
 
 };
-
 export default input;

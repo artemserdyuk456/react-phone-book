@@ -235,13 +235,13 @@ class ContactData extends Component {
             <div className={classes.ContactData}>
                 <h4>Enter your Phone Contact Data</h4>
 
-                <form onSubmit={(e) => this._handleSubmit(e)}>
-                    <input className={classes} type="file" onChange={(e) => this._handleImgChange(e)} />
-                    <button type="submit" onClick={(e) => this._handleSubmit(e)}>Add Image</button>
-                </form>
-                <div className={classes.ImgPreview}>
-                    {$imagePreview}
-                </div>
+                {/*<form onSubmit={(e) => this._handleSubmit(e)}>*/}
+                    {/*<input className={classes} type="file" onChange={(e) => this._handleImgChange(e)} />*/}
+                    {/*<button type="submit" onClick={(e) => this._handleSubmit(e)}>Add Image</button>*/}
+                {/*</form>*/}
+                {/*<div className={classes.ImgPreview}>*/}
+                    {/*{$imagePreview}*/}
+                {/*</div>*/}
 
                 {form}
             </div>
