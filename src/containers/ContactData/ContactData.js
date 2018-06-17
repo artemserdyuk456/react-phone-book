@@ -100,7 +100,6 @@ class ContactData extends Component {
 
     orderHandler = ( event ) => {
         event.preventDefault();
-        this.setState( { loading: true } );
         const formData = {};
         for (let formElementIdentifier in this.state.orderForm) {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
@@ -108,6 +107,8 @@ class ContactData extends Component {
         const order = {
             orderData: formData
         };
+
+        this.props.onPostContactData(order);
         // axios.post('https://react-phone-book-app.firebaseio.com/contacts.json', order)
         //     .then( response =>{
         //         console.log(response) ;
@@ -199,12 +200,14 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-      prs: []
+      // cnt: state.orderForm,
+      // error: state.error
   }
 };
 
 const mapDispatchToProps = dispatch => {
     return{
+        onPostContactData: (orderData) => dispatch(contactDataActions.postContactData(orderData))
 
     }
 };

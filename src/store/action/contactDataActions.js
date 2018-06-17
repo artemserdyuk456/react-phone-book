@@ -1,12 +1,9 @@
 import * as actionTypes from './actionTypes';
-import axios from "axios/index";
+import axios from "axios";
 
-export const postContactData = (name) => {
-    return {
-        type: actionTypes.POST_CONTACTDATA,
-        contactName: name
-    }
-};
+
+
+
 
 export const getContactData = (name) => {
     return {
@@ -29,16 +26,34 @@ export const fetchContactFailed = () => {
 };
 
 
-export const initContacts = () => {
-    return dispatch => {
-        axios.post('https://react-phone-book-app.firebaseio.com/contacts.json', order)
-            .then( response =>{
-                console.log(response.data);
-                dispatch(setContactData(response.data))
-            })
-            .catch( error => {
-                dispatch(fetchContactFailed());
-            })
+export const successLoadData = (id, orderData) => {
+    return {
+        type: actionTypes.SUCCESS_LOAD_DATA,
+        orderId: id,
+        orderData: orderData
+
+
     }
 
+};
+export const failedLoadData = (error) => {
+    return {
+        type: actionTypes.FAILED_LOAD_DATA,
+        error: error
+
+
+    }
+
+};
+export const postContactData = (orderData) => {
+    return dispatch => {
+        axios.post('https://react-phone-book-app.firebaseio.com/contacts.json', orderData)
+            .then( response =>{
+                console.log(response.data);
+                dispatch(successLoadData(response.data, orderData))
+            })
+            .catch( error => {
+                dispatch(failedLoadData(error));
+            })
+    }
 };
