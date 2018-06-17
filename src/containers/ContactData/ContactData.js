@@ -1,52 +1,16 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import InputImg from '../../components/UI/InputImg/InputImg';
 import axios from 'axios';
-import ImageUploader from 'react-images-upload';
 import classes from './ContactData.css';
+import * as contactDataActions from '../../store/action/index';
+
 
 
 
 class ContactData extends Component {
-
-    //add img fnc
-    constructor(props) {
-        super(props);
-        this.imgState = {
-            picture: '',
-            imagePreviewUrl: ''
-        };
-        // this._handleImgChange = this._handleImgChange.bind(this);
-        // this._handleSubmit = this._handleSubmit.bind(this)
-    }
-
-    _handleSubmit (e) {
-        e.preventDefault();
-    };
-
-    _handleImgChange (e) {
-        e.preventDefault();
-
-        let reader = new FileReader();
-        let picture = e.target.files[0];
-
-        reader.onloadend = () => {
-            this.setState({
-                picture: picture,
-                imagePreviewUrl: reader.result
-            })
-        };
-
-        reader.readAsDataURL(picture)
-
-    };
-
-
-
-
-
 
     state = {
         orderForm: {
@@ -197,15 +161,6 @@ class ContactData extends Component {
 
 
     render () {
-        let {imagePreviewUrl} = this.imgState;
-        let $imagePreview = null;
-
-        if (imagePreviewUrl) {
-            $imagePreview = (<img src={imagePreviewUrl}/> )
-        } else {
-            $imagePreview =(<div className={classes.PreviewText}>
-                add img</div>);
-        }
 
         const formElementsArray = [];
         for (let key in this.state.orderForm) {
@@ -235,13 +190,6 @@ class ContactData extends Component {
             <div className={classes.ContactData}>
                 <h4>Enter your Phone Contact Data</h4>
 
-                {/*<form onSubmit={(e) => this._handleSubmit(e)}>*/}
-                    {/*<input className={classes} type="file" onChange={(e) => this._handleImgChange(e)} />*/}
-                    {/*<button type="submit" onClick={(e) => this._handleSubmit(e)}>Add Image</button>*/}
-                {/*</form>*/}
-                {/*<div className={classes.ImgPreview}>*/}
-                    {/*{$imagePreview}*/}
-                {/*</div>*/}
 
                 {form}
             </div>
@@ -249,4 +197,16 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+  return {
+      prs: []
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+    return{
+
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
