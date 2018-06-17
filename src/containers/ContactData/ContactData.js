@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import axios from 'axios';
+// import axios from 'axios';
 import classes from './ContactData.css';
 import * as contactDataActions from '../../store/action/index';
 
@@ -108,14 +108,14 @@ class ContactData extends Component {
         const order = {
             orderData: formData
         };
-        axios.post('https://react-phone-book-app.firebaseio.com/contacts.json', order)
-            .then( response =>{
-                console.log(response) ;
-                this.setState( {loading: false});
-            })
-            .catch( error => {
-                this.state( {loading: false});
-            })
+        // axios.post('https://react-phone-book-app.firebaseio.com/contacts.json', order)
+        //     .then( response =>{
+        //         console.log(response) ;
+        //         this.setState( {loading: false});
+        //     })
+        //     .catch( error => {
+        //         this.state( {loading: false});
+        //     })
     };
 
     //custom validation
