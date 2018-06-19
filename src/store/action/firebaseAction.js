@@ -36,10 +36,5 @@ export const firebaseGetData = () => {
             dispatch(firebaseGetDataSuccess(fireContacts));
             console.log(fireContacts);
         });
-        // alternative
-        // snapshot.val().map((fireContacts) =>{
-        //     const firebaseContactsData = Object.assign({}, fireContacts);
-        //     dispatch(firebaseGetDataSuccess(firebaseContactsData));
-        //     console.log(firebaseContactsData);
     }
 };

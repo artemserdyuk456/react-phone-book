@@ -86,10 +86,10 @@ class SearchData extends Component {
 
                 {map(this.props.firebaseData, (contact, key) =>
                     <ul key={key}>
-                        <li>Name:{}</li>
-                        {/*<li>Name:{contact.orderData.lastName}</li>*/}
-                        {/*<li>Company:{contact.orderData.company}</li>*/}
-                        {/*<li>Number:{contact.orderData.phoneNumber}</li>*/}
+                        <li>Name:{contact.orderData.name}</li>
+                        <li>Name:{contact.orderData.lastName}</li>
+                        <li>Company:{contact.orderData.company}</li>
+                        <li>Number:{contact.orderData.phoneNumber}</li>
                         {/*<li>Number:{contact.orderData.}</li>*/}
                     </ul>)}
 
