@@ -200,8 +200,8 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-      // cnt: state.orderForm,
-      // error: state.error
+      cnt: state.reducer.orderForm,
+      error: state.reducer.error
   }
 };
 

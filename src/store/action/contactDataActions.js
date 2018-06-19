@@ -2,28 +2,22 @@ import * as actionTypes from './actionTypes';
 import axios from "axios";
 
 
+//
+// export const setContactData = (contact) => {
+//     return {
+//         type: actionTypes.SET_CONTACTDATA,
+//         contact: contact
+//     }
+// };
+//
+// export const fetchContactFailed = () => {
+//     return {
+//         type: actionTypes.FETCH_CONTACT_FAILED
+//     }
+// };
+//
 
 
-
-export const getContactData = (name) => {
-    return {
-        type: actionTypes.GET_CONTACTDATA,
-        contactName: name
-    }
-};
-
-export const setContactData = (contact) => {
-    return {
-        type: actionTypes.SET_CONTACTDATA,
-        contact: contact
-    }
-};
-
-export const fetchContactFailed = () => {
-    return {
-        type: actionTypes.FETCH_CONTACT_FAILED
-    }
-};
 
 
 export const successLoadData = (id, orderData) => {

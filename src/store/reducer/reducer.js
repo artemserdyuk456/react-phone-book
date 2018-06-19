@@ -4,6 +4,7 @@ const initialState = {
     orderForm: [],
     error: false
 };
+
 const reducer = (state =initialState, action) => {
     switch (action.type){
         case actionTypes.POST_CONTACTDATA:
@@ -16,9 +17,8 @@ const reducer = (state =initialState, action) => {
             return {
                 ...state,
                 error: true
-
-            }
-
+            };
+        default: return state;
     }
 
 };

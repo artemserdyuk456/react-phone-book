@@ -1,5 +1,2 @@
-export {
-    getContactData,
-    postContactData
-} from './contactDataActions'
-// export {} from 'order';
+export { postContactData } from './contactDataActions';
+export { getContactData } from './searchDataAction';
