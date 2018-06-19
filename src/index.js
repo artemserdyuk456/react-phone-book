@@ -10,12 +10,15 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import contact from "./store/reducer/contact";
+import firebase from "./store/reducer/firebase";
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ;
 
 const rootReducer = combineReducers({
     reducer: reducer,
-    contact: contact
+    contact: contact,
+    firebase: firebase
 });
 
 const store = createStore(rootReducer, composeEnhancers(
