@@ -14,7 +14,8 @@ import map from 'lodash/map';
 
 import Button from '../../components/UI/Button/Button';
 
-import ContentEditable from 'react-contenteditable';
+// import ContentEditable from 'react-contenteditable';
+import * as contactDataActions from "../../store/action";
 
 // import InlineEdit from 'react-edit-inline'; did not work get ERRoR
 
@@ -30,75 +31,139 @@ class SearchData extends Component {
     // }
 
 
+    state = {
+        rewriteForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your Name'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            lastName: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Lastname'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            phoneNumber: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Phone number'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 10,
+                    maxLength: 10
+                },
+                valid: false,
+                touched: false
+            },
+            company: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Company'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Your E-Mail'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'male', displayValue: 'Male'},
+                        {value: 'female', displayValue: 'Female'}
+                    ]
+                },
+                value: '',
+                validation: {},
+                valid: true
+            }
+        },
+        formIsValid: false,
+        loading: false
+    };
 
 
 
-    // state = {
-    //     contacts: [],
-    //     loading: true
-    // };
+    reWriteContactHandler = ( event ) => {
+        event.preventDefault();
+        const reformData = {};
+        for (let formElementIdentifier in this.state.rewriteForm) {
+            reformData[formElementIdentifier] = this.state.rewriteForm[formElementIdentifier].value;
+        }
+        const reContact = {
+            reData: reformData
+        };
 
+        this.props.onPostContactData(reContact);
+    };
+
+    reChangedHandler = (event, identifier) => {
+        const updatedContactForm = {
+            ...this.state.orderForm
+        };
+        const updatedFormElement = {
+            ...updatedContactForm[identifier]
+        };
+        updatedFormElement.value = event.target.value;
+    } ;
 
 
 
 //USE FIREBASE1
     componentDidMount() {
-        // this.contactsRef.on('value', (snapshot) => {
-        //     this.setState({ contacts: snapshot.val()});
-        //     // console.log(snapshot.val())
-        // })
         this.props.firebaseGetData();
     }
-
-    // componentWillMount() {
-    //     const fireForSearch = database.ref('/contacts');
-    //     fireForSearch.orderByChild('name').on('value', (snapshot) => {
-    //         this.setState({
-    //             characters: snapshot.val()
-    //         });
-    //         console.log(snapshot.val());
-    //     })
-    // }
-
 
     removeContact(id) {
         const fireForSearch = database.ref('/contacts');
         fireForSearch.child(id).remove();
-
-
-        // fireForSearch.ref.child(key).on('value', (snapshot) => {
-        //     snapshot.ref().remove();
-        //     console.log(snapshot.val());
-        // })
-
-
     }
 /////////////////////////
 
     getContactData() {
         // this.props.onGetContacts();
 
-
-        // axios.get('https://react-phone-book-app.firebaseio.com/contacts.json')
-        //     .then( response => {
-        //         const fetchedData = [];
-        //         for (let key in response.data){
-        //             fetchedData.push({
-        //                 ...response.data[key],
-        //                 id: key
-        //             })
-        //         }
-        //         console.log(fetchedData);
-        //
-        //         this.setState({ loading:false, contacts: fetchedData});
-        //
-        //
-        //     })
-        //     .catch(error => console.log(error))
     }
 
-    handleChange = evt => {
-        this.setState({html: evt.target.value});
+    handleChange = (evt) => {
+        this.setState({rewriteValue: evt.target.value});
+        // console.log(evt.target.value)
+
     };
 
 
@@ -110,47 +175,47 @@ class SearchData extends Component {
     render() {
         //use firebase1
         // const {characters} = this.state;
+        const reValue = this.handleChange;
 
-
-
-
+        const reFormElementsArray = [];
+        for (let key in this.state.rewriteForm) {
+            reFormElementsArray.push({
+                id: key,
+                config: this.state.rewriteForm[key]
+            });
+        }
         return (
-            
-            
             <div>
-                {/*//USE FIREBASE1*/}
-                {/*<button onClick={this.componentDidMount}>CLICK ME</button>*/}
-
-
                 <form action="">
                     <input type='text' placeholder='search' />
                 </form>
-                
                 {/*REDUX FIREBASE*/}
+
                 {map(this.props.firebaseData, (contact, key) =>
                     <div key={key}>
-                        <form >
-                            <ContentEditable html={contact.orderData.name} onChange={this.handleChange}/>
-                            <ContentEditable html={contact.orderData.lastName} onChange={this.handleChange}/>
-                            <ContentEditable html={contact.orderData.company} onChange={this.handleChange}/>
-                            <ContentEditable html={contact.orderData.phoneNumber} onChange={this.handleChange}/>
-                            <ContentEditable html={contact.orderData.email} onChange={this.handleChange}/>
-
-                            <Button btnType="Danger">Save</Button>
-
-                        </form>
-
-                        {/*<ul >*/}
-                            {/*<li>{}</li>*/}
-                            {/*<li>Name:{}</li>*/}
-                            {/*<li>Company:{}</li>*/}
-                            {/*<li>Number:{}</li>*/}
-                            {/*<li>Email:{}</li>*/}
-                        {/*</ul>*/}
+                        <div onSubmit={this.reWriteContactHandler}>
+                            {reFormElementsArray.map(reElementValue =>(
+                                <span
+                                    key={reElementValue.id}
+                                    contentEditable
+                                    onChange={(event)=>this.reChangedHandler(event, reElementValue.id)}> {contact.orderData.email}</span>
+                                // <span   contentEditable onChange={this.handleChange}> {contact.orderData.lastName}</span>
+                                // <span   contentEditable onChange={this.handleChange}> {contact.orderData.company}</span>
+                                // <span   contentEditable onChange={this.handleChange}> {contact.orderData.phoneNumber}</span>
+                                // <span   contentEditable onChange={this.handleChange}> {contact.orderData.email}</span>
+                                //
+                            ))}
+                            <button>Save</button>
+                        </div>
                         <button onClick={() => this.removeContact(contact.id)}>DELETE</button>
                     </div>
-                    )}
+                )}
 
+                            {/*<ContentEditable html= onChange={this.handleChange}/>*/}
+                            {/*<ContentEditable html={contact.orderData.lastName} onChange={this.handleChange}/>*/}
+                            {/*<ContentEditable html={contact.orderData.company} onChange={this.handleChange}/>*/}
+                            {/*<ContentEditable html={contact.orderData.phoneNumber} onChange={this.handleChange}/>*/}
+                            {/*<ContentEditable html={contact.orderData.email} onChange={this.handleChange}/>*/}
 
 
                 {/*{map(characters,(contSerch, key) =>*/}
@@ -200,6 +265,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
      return {
+         onPostContactData: (orderData) => dispatch(contactDataActions.postContactData(orderData)),
          firebaseGetData: () => dispatch(firebaseAction.firebaseGetData()),
          // onGetContacts: () => dispatch(searchDataAction.getContactData())
      }
