@@ -35,6 +35,8 @@
     "promise": "8.0.1",
     "radium": "^0.19.4",
     "react": "^16.0.0",
+    "react-bootstrap": "^0.32.1",
+    "react-contenteditable": "^2.1.0",
     "react-dev-utils": "^4.0.1",
     "react-dom": "^16.0.0",
     "react-images-upload": "^1.1.99",
@@ -96,6 +98,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "react-edit-inline": "^1.0.8",
     "redux-devtools": "^3.4.1"
   }
 }

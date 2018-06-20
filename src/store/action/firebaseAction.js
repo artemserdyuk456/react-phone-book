@@ -22,6 +22,13 @@ export const firebaseGetDataStart = () => {
     }
 };
 
+export const firebaseDeleteData = (fireContacts) => {
+    return {
+        type: actionType.FIREBASE_DELETE_DATA,
+        fireContacts: fireContacts
+    }
+};
+
 export const firebaseGetData = () => {
     return dispatch => {
         const contactsRef = database.ref('/contacts');
@@ -38,3 +45,14 @@ export const firebaseGetData = () => {
         });
     }
 };
+
+
+// export const firebaseDeleteData = () => {
+//     return dispatch => {
+//         const fireForSearch = database.ref('/contacts');
+//         fireForSearch.ref.child().on('value', (snapshot) => {
+//             snapshot.ref().remove();
+//             console.log(snapshot.val());
+//         })
+//     }
+// };

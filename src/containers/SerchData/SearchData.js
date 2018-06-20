@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { database } from '../../firebase/firebase';
 
+import SectionAbout from '../../components/Contacts/SectionAbout';
+
 // import Contacts from '../../components/Contacts/Contacts'
 import * as searchDataAction from '../../store/action/searchDataAction';
 import * as firebaseAction from '../../store/action/firebaseAction';
@@ -10,7 +12,11 @@ import * as firebaseAction from '../../store/action/firebaseAction';
 import * as actions from '../../store/action/index';
 import map from 'lodash/map';
 
-import axios from 'axios';
+import Button from '../../components/UI/Button/Button';
+
+import ContentEditable from 'react-contenteditable';
+
+// import InlineEdit from 'react-edit-inline'; did not work get ERRoR
 
 
 class SearchData extends Component {
@@ -18,9 +24,8 @@ class SearchData extends Component {
     // constructor(props) {
     //     super(props);
     //     this.state = {
-    //         contacts: null
+    //         characters: null
     //     };
-    //     this.contactsRef = database.ref('/contacts');
     //
     // }
 
@@ -43,6 +48,30 @@ class SearchData extends Component {
         //     // console.log(snapshot.val())
         // })
         this.props.firebaseGetData();
+    }
+
+    // componentWillMount() {
+    //     const fireForSearch = database.ref('/contacts');
+    //     fireForSearch.orderByChild('name').on('value', (snapshot) => {
+    //         this.setState({
+    //             characters: snapshot.val()
+    //         });
+    //         console.log(snapshot.val());
+    //     })
+    // }
+
+
+    removeContact(id) {
+        const fireForSearch = database.ref('/contacts');
+        fireForSearch.child(id).remove();
+
+
+        // fireForSearch.ref.child(key).on('value', (snapshot) => {
+        //     snapshot.ref().remove();
+        //     console.log(snapshot.val());
+        // })
+
+
     }
 /////////////////////////
 
@@ -68,6 +97,10 @@ class SearchData extends Component {
         //     .catch(error => console.log(error))
     }
 
+    handleChange = evt => {
+        this.setState({html: evt.target.value});
+    };
+
 
 
 
@@ -76,22 +109,64 @@ class SearchData extends Component {
 
     render() {
         //use firebase1
-        // const {contacts} = this.state;
+        // const {characters} = this.state;
+
+
 
 
         return (
+            
+            
             <div>
                 {/*//USE FIREBASE1*/}
                 {/*<button onClick={this.componentDidMount}>CLICK ME</button>*/}
 
+
+                <form action="">
+                    <input type='text' placeholder='search' />
+                </form>
+                
+                {/*REDUX FIREBASE*/}
                 {map(this.props.firebaseData, (contact, key) =>
-                    <ul key={key}>
-                        <li>Name:{contact.orderData.name}</li>
-                        <li>Name:{contact.orderData.lastName}</li>
-                        <li>Company:{contact.orderData.company}</li>
-                        <li>Number:{contact.orderData.phoneNumber}</li>
-                        {/*<li>Number:{contact.orderData.}</li>*/}
-                    </ul>)}
+                    <div key={key}>
+                        <form >
+                            <ContentEditable html={contact.orderData.name} onChange={this.handleChange}/>
+                            <ContentEditable html={contact.orderData.lastName} onChange={this.handleChange}/>
+                            <ContentEditable html={contact.orderData.company} onChange={this.handleChange}/>
+                            <ContentEditable html={contact.orderData.phoneNumber} onChange={this.handleChange}/>
+                            <ContentEditable html={contact.orderData.email} onChange={this.handleChange}/>
+
+                            <Button btnType="Danger">Save</Button>
+
+                        </form>
+
+                        {/*<ul >*/}
+                            {/*<li>{}</li>*/}
+                            {/*<li>Name:{}</li>*/}
+                            {/*<li>Company:{}</li>*/}
+                            {/*<li>Number:{}</li>*/}
+                            {/*<li>Email:{}</li>*/}
+                        {/*</ul>*/}
+                        <button onClick={() => this.removeContact(contact.id)}>DELETE</button>
+                    </div>
+                    )}
+
+
+
+                {/*{map(characters,(contSerch, key) =>*/}
+                    {/*<div key={key}>*/}
+                        {/*<ul>*/}
+                            {/*<li>Name: {contSerch.orderData.name}</li>*/}
+                            {/*<li>Last Name: {contSerch.orderData.lastName}</li>*/}
+                            {/*<li>Company: {contSerch.orderData.company}</li>*/}
+                            {/*<li>Number: {contSerch.orderData.phoneNumber}</li>*/}
+                        {/*</ul>*/}
+                        {/**/}
+                    {/*</div>*/}
+
+
+                {/*)}*/}
+                    {/**/}
 
 
                 {/*<button onClick={this.getContactData}>Click</button>*/}
@@ -126,7 +201,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
      return {
          firebaseGetData: () => dispatch(firebaseAction.firebaseGetData()),
-         onGetContacts: () => dispatch(searchDataAction.getContactData())
+         // onGetContacts: () => dispatch(searchDataAction.getContactData())
      }
 };
 

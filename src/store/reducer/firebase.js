@@ -24,6 +24,11 @@ const reducer = (state =initialState, action) => {
                 ...state,
                 loading: false
             };
+        case actionTypes.FIREBASE_DELETE_DATA:
+            return {
+                ...state,
+                fireContacts: action.fireContacts
+            };
         default: return state;
     }
 
